@@ -1,7 +1,10 @@
 import {useState, useEffect} from "react";
-import styled from "styled-components"
+import styled from "styled-components";
+import {useNavigate} from "react-router-dom";
+import WatchlistButton from "../buttons/WatchlistButton";
 
 const Homepage = () => {
+  const navigate = useNavigate();
   const [topMovie, setTopMovie] = useState([]);
   const [popMovie, setPopMovie] = useState([]);
   const [topShows, setTopShows] = useState([]);
@@ -57,29 +60,50 @@ const Homepage = () => {
         <p>loading</p>
       ) : (
         <Container>
-            <h1>Top Rated Movies</h1>
+          <h1>Top Rated Movies</h1>
           <Div>
-          {topMovie.map((items) => {
-            if(topMcounter < 6) {
-              topMcounter++;
-              return (
-                <div key={items.id}>
-                  <ImgMovie src={`https://image.tmdb.org/t/p/w500/${items.poster_path}`} alt={items.title} />
-                  <p>{items.title}</p>
-                </div>
-              );
-            }
-          })}
+            {topMovie.map((items) => {
+              if (topMcounter < 6) {
+                topMcounter++;
+                return (
+                  <div key={items.id}>
+                    <div
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        navigate(`/movie/${items.id}`);
+                      }}
+                    >
+                      <ImgMovie
+                        src={`https://image.tmdb.org/t/p/w500/${items.poster_path}`}
+                        alt={items.title}
+                      />
+                      <p>{items.title}</p>
+                    </div>
+                    <WatchlistButton item={items} />
+                  </div>
+                );
+              }
+            })}
           </Div>
           <h1>Most Popular Movies</h1>
           <Div>
             {popMovie.map((items) => {
-              if(popMcounter < 6) {
-                popMcounter++
+              if (popMcounter < 6) {
+                popMcounter++;
                 return (
                   <div key={items.id}>
-                    <ImgMovie src={`https://image.tmdb.org/t/p/w500/${items.poster_path}`} alt={items.title} />
-                    <p>{items.title}</p>
+                    <div
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        navigate(`/movie/${items.id}`);
+                      }}
+                    >
+                      <ImgMovie
+                        src={`https://image.tmdb.org/t/p/w500/${items.poster_path}`}
+                        alt={items.title}
+                      />
+                      <p>{items.title}</p>
+                    </div>
                   </div>
                 );
               }
@@ -88,12 +112,22 @@ const Homepage = () => {
           <h1>Top Rated Shows</h1>
           <Div>
             {topShows.map((items) => {
-              if(topScounter < 6) {
-                topScounter++
+              if (topScounter < 6) {
+                topScounter++;
                 return (
                   <div key={items.id}>
-                    <ImgMovie src={`https://image.tmdb.org/t/p/w500/${items.poster_path}`} alt={items.title} />
-                    <p>{items.name}</p>
+                    <div
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        navigate(`/show/${items.id}`);
+                      }}
+                    >
+                      <ImgMovie
+                        src={`https://image.tmdb.org/t/p/w500/${items.poster_path}`}
+                        alt={items.title}
+                      />
+                      <p>{items.name}</p>
+                    </div>
                   </div>
                 );
               }
@@ -102,12 +136,22 @@ const Homepage = () => {
           <h1>Most Popular Shows</h1>
           <Div>
             {popShows.map((items) => {
-              if(popScounter < 6) {
-                popScounter++
+              if (popScounter < 6) {
+                popScounter++;
                 return (
                   <div key={items.id}>
-                    <ImgMovie src={`https://image.tmdb.org/t/p/w500/${items.poster_path}`} alt={items.title} />
-                    <p>{items.name}</p>
+                    <div
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        navigate(`/show/${items.id}`);
+                      }}
+                    >
+                      <ImgMovie
+                        src={`https://image.tmdb.org/t/p/w500/${items.poster_path}`}
+                        alt={items.title}
+                      />
+                      <p>{items.name}</p>
+                    </div>
                   </div>
                 );
               }
@@ -120,16 +164,15 @@ const Homepage = () => {
 };
 
 const Container = styled.div`
-display: flex;
-flex-direction: column;
-margin-left: 200px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 200px;
 `;
 const ImgMovie = styled.img`
-width: 100px;
+  width: 100px;
 `;
 
 const Div = styled.div`
-display: flex;
-
+  display: flex;
 `;
 export default Homepage;
