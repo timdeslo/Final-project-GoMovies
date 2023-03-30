@@ -1,23 +1,23 @@
-'use strict';
+"use strict";
 
-const express = require('express');
-const morgan = require('morgan');
-const router = require('./routes/routes')
+const express = require("express");
+const morgan = require("morgan");
+const router = require("./routes/routes");
 const PORT = 4000;
 
 express()
-  .use(function(req, res, next) {
+  .use(function (req, res, next) {
     res.header(
-      'Access-Control-Allow-Methods',
-      'OPTIONS, HEAD, GET, PUT, POST, DELETE'
+      "Access-Control-Allow-Methods",
+      "OPTIONS, HEAD, GET, PUT, POST, DELETE"
     );
     next();
   })
-  .use(morgan('tiny'))
-  .use(express.static('./server/assets'))
+  .use(morgan("tiny"))
+  .use(express.static("./server/assets"))
   .use(express.json())
-  .use(express.urlencoded({ extended: false }))
-  .use('/', express.static(__dirname + '/'))
+  .use(express.urlencoded({extended: false}))
+  .use("/", express.static(__dirname + "/"))
   .use(router)
   // .use(router)
 
