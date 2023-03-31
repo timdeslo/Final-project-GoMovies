@@ -14,6 +14,8 @@ const {
   createUser,
   signin,
   addToWatchlist,
+  removeFromWatchlist,
+  viewWatchlist,
 } = require(`../handlers/MongoHandles`);
 
 //all GET for movies and shows
@@ -29,6 +31,8 @@ router.post("/createUser", createUser);
 router.get("/signIn/:email/:password", signin);
 
 //watchlist
-router.post("/watchlist", addToWatchlist);
+router.get("/watchlist/:userId", viewWatchlist);
+router.post("/addToWatchlist", addToWatchlist);
+router.delete("/removeItemWatchlist/:id", removeFromWatchlist);
 
 module.exports = router;

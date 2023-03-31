@@ -8,6 +8,7 @@ import CreateUserPage from "./Signin/CreateUserPage";
 import SigninPage from "./Signin/SigninPage";
 import SpecificMovie from "./pages/SpecificMovie";
 import SpecificShow from "./pages/SpecificShow";
+import Watchlist from "./pages/Watchlist";
 
 const App = () => {
   // const { currentUser, setCurrentUser } = useContext(UserContext);
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/createuser" element={<CreateUserPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/watchlist" element={<Watchlist/>} />
           <Route path="/movie/:movieId" element={<SpecificMovie />} />
           <Route path="/show/:showId" element={<SpecificShow />} />
         </Routes>

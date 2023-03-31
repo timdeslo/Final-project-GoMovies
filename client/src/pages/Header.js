@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { UserContext } from "../context/UserContext";
-import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
-
+import {UserContext} from "../context/UserContext";
+import {Link, useNavigate} from "react-router-dom";
+import {useContext} from "react";
 
 const Header = () => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const {currentUser, setCurrentUser} = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleChange = () => {
@@ -14,7 +13,7 @@ const Header = () => {
     localStorage.removeItem("user");
     navigate("/signin");
   };
-console.log(currentUser);
+
   return (
     <Headerdiv>
       <Links to="/">
@@ -24,7 +23,7 @@ console.log(currentUser);
         <HeaderRight>
           <H2>Hello, {currentUser.firstName}!</H2>
           <LinksDiv>
-            <Links to="/cart">
+            <Links to="/watchlist">
               <Pcart>View Watchlist</Pcart>
             </Links>
             {/* have a number that updates the amount of items inside cart */}

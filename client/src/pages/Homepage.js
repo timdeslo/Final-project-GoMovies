@@ -19,7 +19,6 @@ const Homepage = () => {
       .then((response) => response.json())
       .then((data) => {
         setTopMovie(data.data.results);
-        console.log(data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -29,7 +28,6 @@ const Homepage = () => {
       .then((response) => response.json())
       .then((data) => {
         setPopMovie(data.data.results);
-        console.log(data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -39,7 +37,6 @@ const Homepage = () => {
       .then((response) => response.json())
       .then((data) => {
         setTopShows(data.data.results);
-        console.log(data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -49,7 +46,6 @@ const Homepage = () => {
       .then((response) => response.json())
       .then((data) => {
         setPopShows(data.data.results);
-        console.log(data);
       })
       .catch((err) => console.error(err));
   }, []);

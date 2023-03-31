@@ -94,9 +94,9 @@ const addToWatchlist = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   const watchlist = {
     userId: req.body.userId,
-    watchlistArr: req.body.watchlistArr,
     actualItem: req.body.actualItem,
   };
+  console.log(req.body)
   try {
     await client.connect();
     const db = client.db("db-name");
@@ -104,14 +104,78 @@ const addToWatchlist = async (req, res) => {
       .collection("users")
       .updateOne(
         {_id: watchlist.userId},
-        {$set: {watchlist: watchlist.watchlistArr}}
+        {$push: {watchlist: watchlist.actualItem}}
       );
     return res.status(200).json({status: 200, message: "added to watchlist"});
   } catch (error) {
-    return response.status(404).json({status: 404, error: error.message});
+    return res.status(404).json({status: 404, error: error.message});
   } finally {
     client.close();
   }
 };
 
-module.exports = {createUser, signin, addToWatchlist};
+// remove from watchlist
+const removeFromWatchlist = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  const userId = req.body.userId;
+  const watchlistId = Number(req.params.id);
+  console.log(typeof watchlistId);
+  try {
+    await client.connect();
+    const db = client.db("db-name");
+    const reservation = await db
+      .collection("users")
+      .findOne({_id: userId, watchlist: {$elemMatch: {id: watchlistId}}});
+    console.log(reservation, "i am here");
+    if (!reservation) {
+      return res
+        .status(404)
+        .json({status: 404, message: "Watchlist Item not found"});
+    }
+    //deletes from watchlist here
+    const deleted = await db
+      .collection("users")
+      .updateOne(
+        {_id: userId, watchlist: {$elemMatch: {id: watchlistId}}},
+        {$pull: {watchlist: {id: watchlistId}}}
+      );
+    if (deleted.modifiedCount > 0) {
+      const updatePage = await db.collection("users").findOne({_id: userId});
+      return res.status(200).json({
+        status: 200,
+        message: "item successfully deleted",
+        data: updatePage,
+      });
+    }
+  } catch (error) {
+    return res.status(404).json({status: 404, error: error.message});
+  } finally {
+    client.close();
+  }
+};
+
+// get all items from watchlist
+const viewWatchlist = async (req, res) => {
+  const userId = req.params.userId;
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+    const db = client.db("db-name");
+    const result = await db.collection("users").findOne({_id: userId});
+    res.status(200).json({status: 200, data: result});
+  } catch (err) {
+    console.log(err.stack);
+    res.status(404).json({status: 404, message: "Data not found."});
+  } finally {
+    client.close();
+  }
+};
+
+module.exports = {
+  createUser,
+  signin,
+  addToWatchlist,
+  removeFromWatchlist,
+  viewWatchlist,
+};
