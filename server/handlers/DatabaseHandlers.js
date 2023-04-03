@@ -88,7 +88,7 @@ const getTopShows = async (req, res) => {
 const getPopularShows = async (req, res) => {
   page = req.query.page || 1;
   const options = {
-    uri: `https://api.themoviedb.org/3/tv/top_rated?api_key=${movieAPI}&language=en-US&page=${page}`,
+    uri: `https://api.themoviedb.org/3/tv/popular?api_key=${movieAPI}&language=en-US&page=${page}`,
     headers: {
         Accept: "application/json",
     },

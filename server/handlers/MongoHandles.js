@@ -119,14 +119,14 @@ const removeFromWatchlist = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   const userId = req.body.userId;
   const watchlistId = Number(req.params.id);
-  console.log(typeof watchlistId);
+  
   try {
     await client.connect();
     const db = client.db("db-name");
     const reservation = await db
       .collection("users")
       .findOne({_id: userId, watchlist: {$elemMatch: {id: watchlistId}}});
-    console.log(reservation, "i am here");
+    
     if (!reservation) {
       return res
         .status(404)
@@ -155,7 +155,7 @@ const removeFromWatchlist = async (req, res) => {
 };
 
 // get all items from watchlist
-const viewWatchlist = async (req, res) => {
+const viewWatchlistNratings = async (req, res) => {
   const userId = req.params.userId;
   const client = new MongoClient(MONGO_URI, options);
 
@@ -172,10 +172,40 @@ const viewWatchlist = async (req, res) => {
   }
 };
 
+//add a rating to movie or show
+const addRating = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options);
+    const rated = {
+      userId: req.body.userId,
+      item: req.body.item,
+      comment: req.body.comment,
+      gNb: req.body.gNb
+    };
+    console.log(req.body)
+    try {
+      await client.connect();
+      const db = client.db("db-name");
+      await db
+        .collection("users")
+        .updateOne(
+          {_id: rated.userId},
+          {$push: {rating: {comment: rated.comment, movieOrShow: rated.item, goodOrBad: rated.gNb}}
+        }
+        );
+      return res.status(200).json({status: 200, message: "added to rating"});
+    } catch (error) {
+      return res.status(404).json({status: 404, error: error.message});
+    } finally {
+      client.close();
+    }
+}
+
+
 module.exports = {
   createUser,
   signin,
   addToWatchlist,
   removeFromWatchlist,
-  viewWatchlist,
+  viewWatchlistNratings,
+  addRating,
 };

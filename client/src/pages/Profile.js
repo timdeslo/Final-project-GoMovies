@@ -1,22 +1,43 @@
-import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import React, {useEffect} from "react";
+import {UserContext} from "../context/UserContext";
+import {useContext, useState} from "react";
+import {Link} from "react-router-dom";
 
 const Profile = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const {currentUser, setCurrentUser} = useContext(UserContext);
+  const [userProfile, setUserProfile] = useState();
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
+  useEffect(() => {
+    fetch(`/watchlistNrating/${currentUser._id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setUserProfile(data.data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  if (!userProfile) {
+    return <p>loading</p>;
   }
-  console.log(user);
+
   return (
-    isAuthenticated && (
-      <div>
-        <img src={user.picture} alt={user.name} />
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
-        {/* <p>{user}</p> */}
-      </div>
-    )
+    <div>
+      {!userProfile ? (
+        <p>loading</p>
+      ) : (
+        <div>
+          {userProfile.rating.map((item, index) => {
+            return (
+              <div key={index}>
+                <h1>{item.movieOrShow.title || item.movieOrShow.name }</h1>
+                <p>{item.goodOrBad}</p>
+                <p>{item.comment}</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 };
 

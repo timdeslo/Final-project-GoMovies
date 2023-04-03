@@ -26,7 +26,9 @@ const Header = () => {
             <Links to="/watchlist">
               <Pcart>View Watchlist</Pcart>
             </Links>
-            {/* have a number that updates the amount of items inside cart */}
+            <Links to="/profile">
+              <Pcart>View Profile</Pcart>
+            </Links>
             <P onClick={handleChange}>Sign Out</P>
           </LinksDiv>
         </HeaderRight>
@@ -35,7 +37,7 @@ const Header = () => {
           <Links to="/signin">
             <H2>Sign In</H2>
           </Links>
-          {/* have a number that updates the amount of items inside cart */}
+          
         </HeaderRight>
       )}
     </Headerdiv>
