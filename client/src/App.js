@@ -9,6 +9,11 @@ import SigninPage from "./Signin/SigninPage";
 import SpecificMovie from "./pages/SpecificMovie";
 import SpecificShow from "./pages/SpecificShow";
 import Watchlist from "./pages/Watchlist";
+import TopMovies from "./pages/TopMovies";
+import PopularMovies from "./pages/PopularMovies";
+import TopShows from "./pages/TopShows";
+import PopularShows from "./pages/PopularShows";
+
 
 const App = () => {
   // const { currentUser, setCurrentUser } = useContext(UserContext);
@@ -17,9 +22,13 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Homepage />} />
           <Route path="/createuser" element={<CreateUserPage />} />
           <Route path="/signin" element={<SigninPage />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/topmovies" element={<TopMovies/>} />
+          <Route path="/popularmovies" element={<PopularMovies/>} />
+          <Route path="/topshows" element={<TopShows />} />
+          <Route path="/popularshows" element={<PopularShows/>} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/watchlist" element={<Watchlist/>} />
           <Route path="/movie/:movieId" element={<SpecificMovie />} />

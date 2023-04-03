@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import styled from "styled-components";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 import WatchlistButton from "../buttons/WatchlistButton";
 
 const Homepage = () => {
@@ -42,7 +42,7 @@ const Homepage = () => {
   }, []);
 
   useEffect(() => {
-    fetch("/topShows")
+    fetch("/popularShows")
       .then((response) => response.json())
       .then((data) => {
         setPopShows(data.data.results);
@@ -56,7 +56,9 @@ const Homepage = () => {
         <p>loading</p>
       ) : (
         <Container>
-          <h1>Top Rated Movies</h1>
+          <Link to="/topmovies">
+            <h1>Top Rated Movies</h1>
+          </Link>
           <Div>
             {topMovie.map((items) => {
               if (topMcounter < 6) {
@@ -81,7 +83,9 @@ const Homepage = () => {
               }
             })}
           </Div>
+          <Link to="/popularmovies">
           <h1>Most Popular Movies</h1>
+          </Link>
           <Div>
             {popMovie.map((items) => {
               if (popMcounter < 6) {
@@ -100,12 +104,15 @@ const Homepage = () => {
                       />
                       <p>{items.title}</p>
                     </div>
+                    <WatchlistButton item={items} />
                   </div>
                 );
               }
             })}
           </Div>
+          <Link to="/topshows">
           <h1>Top Rated Shows</h1>
+          </Link>
           <Div>
             {topShows.map((items) => {
               if (topScounter < 6) {
@@ -124,12 +131,15 @@ const Homepage = () => {
                       />
                       <p>{items.name}</p>
                     </div>
+                    <WatchlistButton item={items} />
                   </div>
                 );
               }
             })}
           </Div>
+          <Link to="/popularshows">
           <h1>Most Popular Shows</h1>
+          </Link>
           <Div>
             {popShows.map((items) => {
               if (popScounter < 6) {
@@ -148,6 +158,7 @@ const Homepage = () => {
                       />
                       <p>{items.name}</p>
                     </div>
+                    <WatchlistButton item={items} />
                   </div>
                 );
               }

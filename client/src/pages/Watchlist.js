@@ -5,18 +5,16 @@ import {Link} from "react-router-dom";
 
 const Watchlist = () => {
   const {currentUser, setCurrentUser} = useContext(UserContext);
-  const [characterLimit, setCharacterLimit] = useState(20);
   const [comment, setComment] = useState("");
   const [Text, setText] = useState("");
   const [userWatchlist, setUserWatchlist] = useState([]);
   const [updated, setUpdated] = useState();
 
   useEffect(() => {
-    fetch(`/watchlist/${currentUser._id}`)
+    fetch(`/watchlistNrating/${currentUser._id}`)
       .then((response) => response.json())
       .then((data) => {
         setUserWatchlist(data.data);
-        console.log(data);
       })
       .catch((err) => console.error(err));
   }, [updated]);
@@ -39,31 +37,40 @@ const Watchlist = () => {
       });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (item, event, num, id) => {
     event.preventDefault();
-    fetch("/api/tweet", {
+    let rating = "";
+    if (num == 1) {
+      rating = "good";
+    } else if (num == 2) {
+      rating = "bad";
+    }
+    fetch("/addToRating", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({status: Text}),
+      body: JSON.stringify({
+        userId: currentUser._id,
+        item: item,
+        comment: Text,
+        gNb: rating,
+      }),
     })
-      .then((res) => {
-        return res.json();
-      })
+      .then((result) => result.json())
       .then((data) => {
-        console.log(data);
-        setComment(data.tweet);
-        setText("");
-      })
-      .catch((error) => console.log(error));
+        if (data.status === 404) {
+          setComment(data.error);
+        } else if (data.status === 200) {
+          setComment(data.message);
+          handleClickButtonDelete(id);
+        }
+      });
   };
 
   const handleChange = (event) => {
-    const inputValue = event.target.value;
     setText(event.target.value);
-    setCharacterLimit(20 - inputValue.length);
   };
 
   if (!userWatchlist.watchlist) {
@@ -80,9 +87,9 @@ const Watchlist = () => {
         <div>
           {userWatchlist.watchlist.map((item) => {
             return (
-              <div>
+              <div key={item.id}>
                 <p>{item.id}</p>
-                <h1>{item.title}</h1>
+                <h1>{item.title || item.name}</h1>
                 <button onClick={() => handleClickButtonDelete(item.id)}>
                   Remove from Watchlist
                 </button>
@@ -91,12 +98,16 @@ const Watchlist = () => {
                   <textarea
                     rows={2}
                     placeholder="Leave a comment"
-                    value={Text}
+                    value={Text.id}
                     onChange={handleChange}
                   ></textarea>
-                  <div value={characterLimit}>{characterLimit}</div>
-                  <button disabled={characterLimit < 0} onClick={handleSubmit}>
-                    Post
+                  <button
+                    onClick={(event) => handleSubmit(item, event, 1, item.id)}
+                  >
+                    Good
+                  </button>
+                  <button onClick={(event) => handleSubmit(item, event, 2, item.id)}>
+                    Bad
                   </button>
                 </div>
               </div>
