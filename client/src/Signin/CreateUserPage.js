@@ -51,52 +51,95 @@ const CreateUserPage = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={(event) => handleSumbit(event, user)}>
-        <input
-          type="text"
-          placeholder="First Name"
-          label={"firstName"}
-          value={user.firstName}
-          required={true}
-          onChange={(e) => setUser({...user, firstName: e.target.value})}
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          label="lastName"
-          value={user.lastName}
-          required={true}
-          onChange={(e) => setUser({...user, lastName: e.target.value})}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          label={"email"}
-          value={user.email}
-          required={true}
-          onChange={(e) => setUser({...user, email: e.target.value})}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          label={"password"}
-          value={user.password}
-          required={true}
-          onChange={(e) => setUser({...user, password: e.target.value})}
-        />
-        <input
-          type="password"
-          placeholder="comfirm password"
-          label={"confirmPassword"}
-          required={true}
-          onChange={(e) => setUser({...user, confirmPassword: e.target.value})}
-        />
-        <button type="submit">Create User</button>
-      </form>
-      {error === undefined ? null : <p style={{color: "red"}}>{error}</p>}
-    </div>
+    <Container>
+      <Wrapper>
+        <Form onSubmit={(event) => handleSumbit(event, user)}>
+          <Input
+            type="text"
+            placeholder="First Name"
+            label={"firstName"}
+            value={user.firstName}
+            required={true}
+            onChange={(e) => setUser({...user, firstName: e.target.value})}
+          />
+          <Input
+            type="text"
+            placeholder="Last Name"
+            label="lastName"
+            value={user.lastName}
+            required={true}
+            onChange={(e) => setUser({...user, lastName: e.target.value})}
+          />
+          <Input
+            type="email"
+            placeholder="Email"
+            label={"email"}
+            value={user.email}
+            required={true}
+            onChange={(e) => setUser({...user, email: e.target.value})}
+          />
+          <Input
+            type="password"
+            placeholder="password"
+            label={"password"}
+            value={user.password}
+            required={true}
+            onChange={(e) => setUser({...user, password: e.target.value})}
+          />
+          <Input
+            type="password"
+            placeholder="comfirm password"
+            label={"confirmPassword"}
+            required={true}
+            onChange={(e) => setUser({...user, confirmPassword: e.target.value})}
+          />
+          <Button type="submit">Create User</Button>
+        </Form>
+        {error === undefined ? null : <p style={{color: "red"}}>{error}</p>}
+      </Wrapper>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 100px;
+`;
+
+const Wrapper = styled.div`
+  background-color: #202020;
+  width: fit-content;
+  height: fit-content;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 50px;
+`;
+
+const Input = styled.input`
+  font-family: "Oswald", sans-serif;
+  font-weight: bold;
+  font-size: 27px;
+`;
+
+const Button = styled.button`
+  margin-top: 20px;
+  font-family: "Oswald", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 10px 40px;
+  border-radius: 7px;
+  border: none;
+  :hover& {
+    cursor: pointer;
+    opacity: 0.5;
+  }
+`;
 
 export default CreateUserPage;
