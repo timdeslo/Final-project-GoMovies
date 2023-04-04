@@ -13,6 +13,7 @@ import TopMovies from "./pages/TopMovies";
 import PopularMovies from "./pages/PopularMovies";
 import TopShows from "./pages/TopShows";
 import PopularShows from "./pages/PopularShows";
+import GlobalStyles from "./GlobalStyles";
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
   return (
     <>
       <BrowserRouter>
+      <GlobalStyles />
         <Header />
         <Routes>
           <Route path="/createuser" element={<CreateUserPage />} />

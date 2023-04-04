@@ -5,9 +5,8 @@ const movieAPI = process.env.MOVIE_API;
 
 //GET ALL topmovies
 const getTopMovies = async (req, res) => {
-  page = req.query.page || 1;
   const options = {
-    uri: `https://api.themoviedb.org/3/movie/top_rated?api_key=${movieAPI}&language=en-US&page=${page}`,
+    uri: `https://api.themoviedb.org/3/movie/top_rated?api_key=${movieAPI}&language=en-US&page=1`,
     headers: {
         Accept: "application/json",
     },
@@ -32,9 +31,8 @@ const getTopMovies = async (req, res) => {
 
 // GET all most popular movies
 const getPopularMovies = async (req, res) => {
-  page = req.query.page || 1;
   const options = {
-    uri: `https://api.themoviedb.org/3/movie/popular?api_key=${movieAPI}&language=en-US&page=${page}`,
+    uri: `https://api.themoviedb.org/3/movie/popular?api_key=${movieAPI}&language=en-US&page=1`,
     headers: {
         Accept: "application/json",
     },
@@ -59,9 +57,8 @@ const getPopularMovies = async (req, res) => {
 
 //GET top rated shows
 const getTopShows = async (req, res) => {
-  page = req.query.page || 1;
   const options = {
-    uri: `https://api.themoviedb.org/3/tv/top_rated?api_key=${movieAPI}&language=en-US&page=${page}`,
+    uri: `https://api.themoviedb.org/3/tv/top_rated?api_key=${movieAPI}&language=en-US&page=1`,
     headers: {
         Accept: "application/json",
     },
@@ -86,9 +83,8 @@ const getTopShows = async (req, res) => {
 
 //GET popular shows
 const getPopularShows = async (req, res) => {
-  page = req.query.page || 1;
   const options = {
-    uri: `https://api.themoviedb.org/3/tv/popular?api_key=${movieAPI}&language=en-US&page=${page}`,
+    uri: `https://api.themoviedb.org/3/tv/popular?api_key=${movieAPI}&language=en-US&page=1`,
     headers: {
         Accept: "application/json",
     },

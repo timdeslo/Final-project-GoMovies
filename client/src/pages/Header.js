@@ -49,13 +49,13 @@ const LinksDiv = styled.div`
 `;
 
 const Headerdiv = styled.div`
-  background-color: #4a4747;
+  background-color: #202020;
   height: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  width: 100vw;
+
 `;
 
 const HeaderRight = styled.div`
@@ -69,6 +69,14 @@ const HeaderRight = styled.div`
 const Title = styled.h1`
   font-size: 40px;
   margin-left: 20px;
+  background: yellow;
+  color: black;
+  border-radius: 5px;
+  padding: 5px;
+  :hover& {
+    cursor: pointer;
+    opacity: 0.5;
+  }
 `;
 
 const Links = styled(Link)`
@@ -82,22 +90,24 @@ const Links = styled(Link)`
 const H2 = styled.h2`
   margin-bottom: 0px;
   font-family: "Oswald";
+  color: yellow;
 `;
 
 const Pcart = styled.p`
   margin-right: 0px;
   font-family: "Oswald";
   :hover& {
-    opacity: 0.5;
+    opacity: 0.9;
+    cursor: pointer;
+    color: yellow;
   }
 `;
 
 const P = styled.p`
   :hover& {
+    opacity: 0.9;
     cursor: pointer;
-  }
-  :hover& {
-    opacity: 0.5;
+    color: yellow;
   }
 `;
 export default Header;
