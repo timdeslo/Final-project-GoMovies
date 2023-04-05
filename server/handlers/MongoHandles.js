@@ -2,6 +2,7 @@
 const {MongoClient} = require("mongodb");
 require("dotenv").config();
 const {MONGO_URI} = process.env;
+const bcrypt = require('bcrypt');
 
 const options = {
   useNewUrlParser: true,
@@ -41,12 +42,13 @@ const createUser = async (req, res) => {
     if (failed) {
       throw new Error(failure.error);
     } else {
+      const hashedPassword = await bcrypt.hash(userInfo.password, 10);
       const user = {
         _id: uuidv4(),
         email: userInfo.email,
         firstName: userInfo.firstName,
         lastName: userInfo.lastName,
-        password: userInfo.password,
+        password: hashedPassword,
         userType: 1,
         watchlist: [],
         rating: [],
@@ -76,7 +78,8 @@ const signin = async (req, res) => {
     if (user === null) {
       throw new Error("No account Found");
     }
-    if (user.password !== userPassword) {
+    const match = await bcrypt.compare(userPassword, user.password);
+    if (!match) {
       throw new Error("Wrong Password");
     }
     client.close();
