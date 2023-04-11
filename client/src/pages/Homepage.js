@@ -20,7 +20,6 @@ const Homepage = () => {
       .then((response) => response.json())
       .then((data) => {
         setTopMovie(data.data.results);
-        console.log(data.data);
       })
       .catch((err) => console.error(err));
   }, []);
