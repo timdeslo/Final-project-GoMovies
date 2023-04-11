@@ -2,7 +2,7 @@
 const {MongoClient} = require("mongodb");
 require("dotenv").config();
 const {MONGO_URI} = process.env;
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const options = {
   useNewUrlParser: true,
@@ -99,7 +99,7 @@ const addToWatchlist = async (req, res) => {
     userId: req.body.userId,
     actualItem: req.body.actualItem,
   };
-  console.log(req.body)
+  console.log(req.body);
   try {
     await client.connect();
     const db = client.db("db-name");
@@ -122,14 +122,14 @@ const removeFromWatchlist = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   const userId = req.body.userId;
   const watchlistId = Number(req.params.id);
-  
+
   try {
     await client.connect();
     const db = client.db("db-name");
     const reservation = await db
       .collection("users")
       .findOne({_id: userId, watchlist: {$elemMatch: {id: watchlistId}}});
-    
+
     if (!reservation) {
       return res
         .status(404)
@@ -177,32 +177,38 @@ const viewWatchlistNratings = async (req, res) => {
 
 //add a rating to movie or show
 const addRating = async (req, res) => {
-    const client = new MongoClient(MONGO_URI, options);
-    const rated = {
-      userId: req.body.userId,
-      item: req.body.item,
-      comment: req.body.comment,
-      gNb: req.body.gNb
-    };
-    console.log(req.body)
-    try {
-      await client.connect();
-      const db = client.db("db-name");
-      await db
-        .collection("users")
-        .updateOne(
-          {_id: rated.userId},
-          {$push: {rating: {comment: rated.comment, movieOrShow: rated.item, goodOrBad: rated.gNb}}
+  const client = new MongoClient(MONGO_URI, options);
+  const rated = {
+    userId: req.body.userId,
+    item: req.body.item,
+    comment: req.body.comment,
+    gNb: req.body.gNb,
+  };
+  console.log(req.body);
+  try {
+    await client.connect();
+    const db = client.db("db-name");
+    await db
+      .collection("users")
+      .updateOne(
+        {_id: rated.userId},
+        {
+          $push: {
+            rating: {
+              comment: rated.comment,
+              movieOrShow: rated.item,
+              goodOrBad: rated.gNb,
+            },
+          },
         }
-        );
-      return res.status(200).json({status: 200, message: "added to rating"});
-    } catch (error) {
-      return res.status(404).json({status: 404, error: error.message});
-    } finally {
-      client.close();
-    }
-}
-
+      );
+    return res.status(200).json({status: 200, message: "added to rating"});
+  } catch (error) {
+    return res.status(404).json({status: 404, error: error.message});
+  } finally {
+    client.close();
+  }
+};
 
 module.exports = {
   createUser,
