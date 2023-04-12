@@ -93,13 +93,14 @@ const Watchlist = () => {
           To view the movies you have rated, please click on the view Profile page
           or click <Links to="/profile">here</Links>
         </p>
-        
         </DivHeader>
         {userWatchlist.watchlist.length === 0 ? (
-          <h2>
-            Looks like your watchlist is empty, Click <Link to={"/"}>here</Link>{" "}
-            if you would like to keep looking around !{" "}
-          </h2>
+          <DivHeader>
+            <H2>
+              Looks like your watchlist is empty, Click <Linkss to={"/"}>here</Linkss>{" "}
+              if you would like to keep looking around !{" "}
+            </H2>
+          </DivHeader>
       ) : (
         <Container>
           <h1>Your Watchlist</h1>
@@ -187,6 +188,7 @@ const Loader = styled(FiLoader)`
 const DivHeader = styled.div`
 padding-left: 50px;
 font-size: 20px;
+font-family: 'Oswald', sans-serif;
 `;
 
 const Container = styled.div`
@@ -194,6 +196,18 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   margin-bottom: 100px;
+`;
+
+const H2 = styled.h2`
+color: white;
+display: flex;
+align-items: center;
+font-size: 20px;
+`;
+
+const Linkss = styled(Link)`
+color: yellow;
+padding: 5px;
 `;
 
 const Div = styled.div`
