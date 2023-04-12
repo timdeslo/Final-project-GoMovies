@@ -41,7 +41,6 @@ const CreateUserPage = () => {
         } else {
           localStorage.setItem("user", JSON.stringify(data.data));
           setCurrentUser(data.data);
-          console.log(currentUser);
           navigate("/");
         }
       })
