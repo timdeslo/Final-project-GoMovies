@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <Headerdiv>
       <Links to="/">
-        <Title>GoMovie</Title>
+        <Title>GoMovies</Title>
       </Links>
       {currentUser ? (
         <HeaderRight>
