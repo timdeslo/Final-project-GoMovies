@@ -35,7 +35,6 @@ const Watchlist = () => {
     })
       .then((result) => result.json())
       .then((data) => {
-        console.log(data);
         setUpdated(data.data);
       });
   };
