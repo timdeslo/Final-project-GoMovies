@@ -12,4 +12,4 @@ Access client in terminal with cd client, ensure yarn is installed and run yarn 
 Access server in terminal with cd server, ensure yarn is installed and run yarn start.
 
 ## Production
-This project was made using HTML, CSS, JavaScript, React, Node.js, and mongoDB
+This project was made using HTML, CSS, JavaScript, React, Node.js, and mongoDB 
